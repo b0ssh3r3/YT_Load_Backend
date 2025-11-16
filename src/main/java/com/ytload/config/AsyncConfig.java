@@ -1,0 +1,26 @@
+package com.ytload.config;
+
+import java.util.concurrent.Executor;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+
+@Configuration
+@EnableAsync
+public class AsyncConfig {
+
+	@Bean(name = "taskExecutor-")
+	public Executor taskExecutor() {
+		ThreadPoolTaskExecutor pool = new ThreadPoolTaskExecutor();
+		pool.setCorePoolSize(10);
+		pool.setMaxPoolSize(50);
+		pool.setQueueCapacity(100);
+		pool.setThreadNamePrefix("DowloadTask-");
+		pool.initialize();
+		return pool;
+
+	}
+
+}
